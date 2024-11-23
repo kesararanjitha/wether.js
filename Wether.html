@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #citydetails{
+            width: 200px;
+            height: 25px;
+        }
+        #Button{
+            height: 25px;
+            margin: 0px 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather report</h1>
+    <input id ="citydetails"type="text" placeholder="Enter your city name">
+    <button id="Button">Search</button>
+    <div>
+    <h1 id="city_name">Canda, London</h1>
+    <h5 id="city_time">Local Time</h5>
+    <p id="time">13</p>
+    </div>
+    <script>
+    const input = document.getElementById("citydetails");
+    const button = document.getElementById("Button");
+    const cityna=document.getElementById("city_name");
+    const time1=document.getElementById("city_time");
+    const city_time=document.getElementById("time");
+    
+    async function greet(city_name) {
+        const res = await fetch(`http://api.weatherapi.com/v1/current.json?key=13424cb0246843eaa01135653240211&q=${city_name}&aqi=yes`);
+        return await res.json();
+    }
+
+    button.addEventListener("click", async () => {
+        const value = input.value; // Use .value directly without parentheses
+            const result = await greet(value);
+           
+            cityna.innerText=`${result.location.name} ${result.location.region}`;
+            time1.innerText=result.location.localtime;
+            city_time.innerText=result.current.temp_c;
+            
+            
+          
+        
+    });
+    // location: {…}, current: {…}}current: {last_updated_epoch: 1730558700, last_updated: '2024-11-02 15:45', temp_c: 1.4, temp_f: 34.5, is_day: 1, …}location: {name: 'Landon', region: 'Jamtlands Lan', country: 'Sweden', lat: 63.5667, lon: 14.2667, …}[[Prototype]]: Object
+
+    </script>
+</body>
+</html>
